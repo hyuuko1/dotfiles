@@ -1,0 +1,11 @@
+[user]
+    email = 751533978@qq.com
+    name = hyuuko
+[http]
+    proxy = http://127.0.0.1:20172
+[https]
+    proxy = http://127.0.0.1:20172
+[core]
+    filemode = false
+[commit]
+    template = ~/.gitmessage
