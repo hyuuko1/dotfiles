@@ -1,0 +1,8 @@
+# 此目录为 zsh 的 ZDOTDIR
+.z
+.zcompdump
+.zcompcache
+.zkbd
+.*_history
+*.bak
+*.zwc
