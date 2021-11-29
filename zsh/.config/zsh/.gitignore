@@ -6,3 +6,10 @@
 .*_history
 *.bak
 *.zwc
+
+zinit/completions
+zinit/module
+zinit/plugins
+zinit/polaris
+zinit/services
+zinit/snippets

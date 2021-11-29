@@ -20,7 +20,8 @@ typeset -A ZINIT=(
 )
 source ${ZINIT[BIN_DIR]}/zinit.zsh
 
-zinit wait lucid light-mode multisrc"$ZDOTDIR/snippets/*.zsh" for \
+zinit wait lucid light-mode for \
+    multisrc"$ZDOTDIR/snippets/*.zsh" \
     OMZL::completion.zsh \
     OMZL::directories.zsh \
     OMZP::systemd/systemd.plugin.zsh \

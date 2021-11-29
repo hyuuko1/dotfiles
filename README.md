@@ -4,7 +4,8 @@
 
 ```bash
 ❯ bash
-❯ git clone --depth 1 https://github.com/hyuuko/dotfiles
+❯ cd ~
+❯ git clone --depth 1 https://github.com/hyuuko/dotfiles && cd dotfiles
 ❯ git submodule update --init --depth 1 --recursive
 
 # 修改一些环境变量，比如 http_proxy 等等

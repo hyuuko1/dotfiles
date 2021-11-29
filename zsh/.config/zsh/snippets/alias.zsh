@@ -15,9 +15,9 @@ append_path() {
     esac
 }
 
-# Rust
-export RUSTUP_HOME='/usr/local/rustup'
-export CARGO_HOME='/usr/local/cargo'
+append_path "$HOME/.cargo/bin"
+append_path "$HOME/.local/bin"
+
 # Rust 国内镜像，https://blog.csdn.net/xiangxianghehe/article/details/105874880
 export RUSTUP_DIST_SERVER="https://rsproxy.cn"
 export RUSTUP_UPDATE_ROOT="https://rsproxy.cn/rustup"
@@ -42,9 +42,6 @@ export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib
 #PERL_MB_OPT="--install_base \"/home/hyuuko/perl5\""; export PERL_MB_OPT;
 #PERL_MM_OPT="INSTALL_BASE=/home/hyuuko/perl5"; export PERL_MM_OPT;
 
-append_path "$HOME/.local/bin"
-append_path "$CARGO_HOME/bin"
-
 # source /opt/anaconda/bin/activate root
 
 # eval "$(fnm env --node-dist-mirror https://npm.taobao.org/mirrors/node)"
@@ -57,7 +54,7 @@ alias vim='nvim'
 alias pc='proxychains4 -q'
 alias sudo='sudo '                  # 这样可以让 sudo 后面跟其他 alias
 alias man-cn='LANG=zh_CN.UTF-8 man' # 查看中文手册
-alias paru='paru --aururl "https://aur.tuna.tsinghua.edu.cn"'
+alias paru='paru --aururl "https://aur.tuna.tsinghua.edu.cn" --bottomup'
 
 # TIM 有时候会卡死，只好鲨了
 alias fuckTIM='kill $(pgrep TIM.exe)'
