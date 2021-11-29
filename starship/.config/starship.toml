@@ -1,0 +1,19 @@
+# ~/.config/starship.toml
+#
+# See https://starship.rs/config/ for explanation of the configuration options.
+
+[cmd_duration]
+min_time = 0
+show_milliseconds = true
+
+[directory]
+fish_style_pwd_dir_length = 3
+
+[status]
+disabled = false
+format = '[\[$symbol$common_meaning$signal_name$maybe_int\]]($style) '
+map_symbol = true
+pipestatus = true
+
+[time]
+disabled = false
