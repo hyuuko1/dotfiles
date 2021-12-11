@@ -1,7 +1,7 @@
 # Proxy
 PROXY_SERVER='127.0.0.1'
 pon() {
-    export all_proxy=socks5://$PROXY_SERVER:20173 \
+    export all_proxy=socks5h://$PROXY_SERVER:20173 \
         http_proxy=http://$PROXY_SERVER:20172 \
         https_proxy=http://$PROXY_SERVER:20172 \
         ftp_proxy=http://$PROXY_SERVER:20172

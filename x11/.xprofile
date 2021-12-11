@@ -5,6 +5,8 @@ export XDG_CONFIG_HOME=$HOME/.config
 export XDG_CACHE_HOME=$HOME/.cache
 export XDG_DATA_HOME=$HOME/.local/share
 export XDG_STATE_HOME=$HOME/.local/state
+# https://wiki.archlinux.org/title/Flatpak#Adding_Flatpak_.desktop_files_to_your_menu
+export XDG_DATA_DIRS=/usr/local/share:/usr/share:/var/lib/flatpak/exports/share/applications:$HOME/.local/share/flatpak/exports/share/applications
 
 # https://github.com/fcitx/fcitx5/issues/295#issuecomment-893188937
 # 设置为 fcitx 会有更大的兼容性，因为一些旧的应用程序可能只支持 fcitx4 im 模块
