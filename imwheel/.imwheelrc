@@ -1,0 +1,37 @@
+# https://wiki.archlinux.org/title/IMWheel
+# imwheel -df 在终端输出并且根据鼠标位置来选定窗口（而非 focus 的窗口）
+# imwheel -df --debug --kill | grep name 用来调试，滚动时会输出 name
+
+# "^(microsoft-edge|google-chrome|telegram-desktop)"
+# # <Key Modifiers Input>, <Mouse Action Input>, <Key Action Output>
+# # Button4, 3 指重复 Wheel Up 3 次
+# None,      Up,   Button4, 3
+# None,      Down, Button5, 3
+
+# 不知道干嘛的
+# Shift_L,   Up,   Shift_L|Button4, 4
+# Shift_L,   Down, Shift_L|Button5, 4
+
+
+
+# 不修改 vscode 和 firefox 等的滚轮速度
+"^(Code|firefox|plasmashell|libreoffice)"
+None,      Up,   Button4
+None,      Down, Button5
+
+"edge"
+None,      Up,   Button4, 3
+None,      Down, Button5, 3
+
+# 如果之前的条件没匹配到
+".*"
+None,      Up,   Button4, 3
+None,      Down, Button5, 3
+
+# 按 Ctrl 和鼠标滚轮向上时 zooming in/out without multiplying
+Control_L, Up,   Control_L|Button4
+Control_L, Down, Control_L|Button5
+
+# Shift Up 单倍速
+Shift_L,   Up,   Button4
+Shift_L,   Down, Button5

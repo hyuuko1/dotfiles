@@ -1,0 +1,11 @@
+[Unit]
+Description=Brightness
+Wants=graphical-session.target
+After=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/redshift -P -O 3600 -b 0.8:0.8
+
+[Install]
+WantedBy=default.target

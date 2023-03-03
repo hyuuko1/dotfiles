@@ -2,12 +2,23 @@
 #
 # See https://starship.rs/config/ for explanation of the configuration options.
 
+# PS2/PROMPT2
+# 输入的命令为多行时的提示符
+# continuation_prompt = "[∙∙∙](bright-black) "
+continuation_prompt = "    "
+
 [cmd_duration]
 min_time = 0
 show_milliseconds = true
 
 [directory]
 fish_style_pwd_dir_length = 3
+
+# show the current shell level $SHLVL
+[shlvl]
+disabled = false
+format = "[$shlvl↕]($style) "
+style = "yellow bold"
 
 [status]
 disabled = false

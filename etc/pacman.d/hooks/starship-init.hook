@@ -1,0 +1,10 @@
+[Trigger]
+Type = Package
+Operation = Install
+Operation = Upgrade
+Target = starship
+
+[Action]
+Description = Updating $ZDOTDIR/snippets/starship-init.zsh...
+When = PostTransaction
+Exec = /usr/bin/zsh -c 'HOME=/home/hyuuko; /usr/bin/starship init zsh --print-full-init | sed "s/^PROMPT2=\"\$(.*\"$/PROMPT2=\"$(/usr/bin/starship prompt --continuation)\"/" >! $HOME/.config/zsh/snippets/starship-init.zsh'

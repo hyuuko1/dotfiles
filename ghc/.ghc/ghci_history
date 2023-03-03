@@ -1,0 +1,100 @@
+length . nub [1,1,2]
+:t length 
+:t nub
+:t length . nub
+(length . nub) [1,1,2]
+length . nub
+import Data.List
+:m + Data.List
+fn = ceiling . negate . tan . cos . max 50  
+fn x = ceiling (negate (tan (cos (max 50 x))))
+:t a
+a = sum'
+:t sum'
+sum' xs = foldl (+) 0 xs
+:t sum'
+sum' = foldl (+) 0
+tan . cos . max 50 $ 2
+ceiling -2
+cos 2
+fn 2
+fn = ceiling . negate . tan . cos . max 50
+sum . replicate 5 $ (max 1 2)
+sum . replicate 5 (max 1 2)
+sum . replicate 5 . (max 1 2)
+sum . replicate 5 . max 1 2
+sum . replicate 5 . max 1 $ 2
+sum (replicate 5 (max 1 2))
+ceiling . negate . tan . cos . max 50 $ 1
+ceiling . negate . tan . cos . max 50 1
+ceiling . negate . tan . cos . max 50 
+480/32
+10000/18
+map (\xs -> negate (sum xs)) [[1..2],[1..3],[1..4]]
+takeWhile (<1000) (scanl1 (+) (map sqrt [1..]))
+scanl (flip (:)) [] [3,2,1] 
+:t flip 
+sum'1 [1,2,3]
+sum'1 []
+sum'1 [1,2,3]
+sum'1 = foldl1 (+)
+sum'' [1..]
+sum'' = foldr (+) 0
+sum'' [1..]
+sum'' = foldl (+) 0
+map''' (+1) [1..]
+map''' f xs = foldl (\acc x -> acc ++ [f x]) [] xs
+map''' f xs = foldl (\acc x -> acc ++ [fx]) [] xs
+map'' (+1) [1..]
+map'' f xs = foldr (\x acc -> f x : acc) [] xs
+last [1..]
+last [1,2,3]
+tail [1,2,3]
+a [1,2,3]
+a ys = foldl (\acc x -> [x] ++ acc) [] ys
+a ys = foldl (\x acc -> [x] ++ acc) [] ys
+a [1,2,3]
+a ys = foldr (\x acc -> [x] ++ acc) [] ys
+a [1,2,3]
+a ys = foldr (\x acc -> x ++ acc) [] ys
+elem' 1 [2,3,1,4]
+elem' 1 [2,3,4]
+elem' y ys = foldr (\x acc -> x == y || acc) False ys
+False || True
+False || False 
+True || False 
+elem' 1 [1..]
+elem' y ys = foldr (\x acc -> x == y || acc) False ys
+elem' 1 [1..]
+elem' y ys = foldr (\x acc -> if x == y then True else acc) False ys
+elem' 1 [1..]
+elem' y ys = foldl (\acc x -> if x == y then True else acc) False ys
+elem' 5 [1..]
+elem' 5 [1..]
+elem' y ys = foldl (\acc x -> if x == y then True else acc) False ys
+elem' 5 [1..]
+elem' 1 [4,3,2,1]
+elem' y ys = foldr (\x acc -> if x == y then True else acc) False ys
+sum'' [0..]
+sum'' = foldr (+) 0
+1:[2]
+[1]:2
+:t (+)
+:t (\acc x -> acc + x)
+:t sum'' 
+sum'' [1,2,3,4]
+sum'' = foldl (+) 0
+:t foldl
+sum' [1,2,3]
+sum' [1,2,3] 0
+:t sum'
+sum' xs = foldl (\acc x -> acc + x) 0 xs  
+map (\(a,b) -> a + b) [(1,2),(3,5)] 
+(1,2)+(2,2)
+zipWith (\a b -> a + b - 1) [1,1,1] [1,2,3]
+zipWith (\a b -> a + b) [1,1,1] [1,2,3]
+zipWith (\a b -> (a + b)) [1,1,1] [1,2,3]
+zipWith (\a b -> (a + b) [1,1,1] [1,2,3]
+head (filter (\x -> x `mod` 3829 == 0) [100000, 99999 ..])
+largestDivisible
+:}

@@ -1,0 +1,1 @@
+- [简单记录在 archlinux 上跑原神的经历 - 淀粉月刊](https://dfkan.com/13652.html#prettyPhoto)

@@ -1,0 +1,19 @@
+[Unit]
+Description=IMWheel
+PartOf=graphical-session.target
+After=graphical-session.target
+
+[Service]
+Type=simple
+# 睡眠 20 秒是因为 nvidia+wayland 下进入图形界面比较慢
+# ExecStartPre=/usr/bin/sleep 20
+# 使用 X11 时，-X :0
+# 使用 wayland 时，-X :1
+ExecStart=/usr/bin/imwheel -df -X :1
+ExecStop=/usr/bin/pkill imwheel
+RemainAfterExit=yes
+# 可以试试不用 -X :1 选项，而是用 DISPLAY 环境变量，我试了没用（
+# Environment=DISPLAY=:1
+
+[Install]
+WantedBy=graphical-session.target

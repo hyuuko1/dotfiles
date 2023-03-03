@@ -1,96 +1,133 @@
-# 参考资料:
-# http://zsh.sourceforge.net/Doc/Release/Completion-Widgets.html#Completion-Matching-Control
-# http://zsh.sourceforge.net/Doc/Release/Completion-System.html#Completion-System
+# https://github.com/sorin-ionescu/prezto/blob/master/modules/completion/init.zsh
+# https://thevaluable.dev/zsh-completion-guide-examples/
 
-# TODO: complete-with-dot
-# https://github.com/romkatv/dotfiles-public/commit/50647477461db9ed767d134884527217943a5587
-# https://www.zsh.org/mla/users/2007/msg00465.html
+# zmodload zsh/complist
 
-# 可以 hook zstyle 来查看究竟请求了哪些玩意儿
-# 更好的方法是 C-x h
+
+
+#
+# Options
+#
+
+# lets files beginning with a . be matched without explicitly specifying the dot
+# 让以 . 开头的文件在没有明确指定 . 的情况下进行匹配
+# 例如 ls zsh 可以直接匹配到 .zshrc
+setopt GLOB_DOTS
+# 也可通过修改 _comp_options 来完成，不过需要放在 compinit 后面，因为 _comp_options 在 compinit 时才被定义
+# /usr/share/zsh/functions/Completion/compinit:138
+# _comp_options+=(globdots) # With hidden files
+
+# 单词中也进行补全
+setopt COMPLETE_IN_WORD # Complete from both ends of a word.
+setopt ALWAYS_TO_END        # Move cursor to the end of a completed word.
+
+# unsetopt MENU_COMPLETE      # Do not autoselect the first completion entry.
+# unsetopt FLOW_CONTROL       # Disable start/stop characters in shell editor.
+
+#
+# setopt NO_BEEP            # Do not beep on error in ZLE.
+
+
+
+
+# https://zsh.sourceforge.io/Doc/Release/Completion-System.html#Completion-System-Configuration
+# zstyle <pattern> <style> <values>
+# :completion:<function>:<completer>:<command>:<argument>:<tag>
 
 # 禁用旧补全系统
 zstyle ':completion:*' use-compctl false
 
-compctl() {
-    print -P "\n%F{red}Don't use compctl anymore%f"
+# 来自 grml 的，用来自动 rehash。_force_rehash 要放在其他 completer 前面
+_force_rehash () {
+    (( CURRENT == 1 )) && rehash
+    # Because we didn't really complete anything
+    return 1
 }
 
-# 缓存补全结果
-zstyle ':completion:*:complete:*' use-cache true
-zstyle ':completion:*:complete:*' cache-policy _aloxaf_caching_policy
-_aloxaf_caching_policy() {
-    # 缓存策略：若不存在或 14 天以前则认定为失效
-    [[ ! -f $1 && -n "$1"(Nm+14) ]]
-}
+# Fuzzy match mistyped completions.
+zstyle ':completion:*' completer _force_rehash _complete _match _approximate
+zstyle ':completion:*:match:*' original only
+zstyle ':completion:*:approximate:*' max-errors 1 numeric
 
-# 补全顺序:
-# _complete - 普通补全函数  _extensions - 通过 *.\t 选择扩展名
-# _match    - 和 _complete 类似但允许使用通配符
-# _expand_alias - 展开别名 _ignored - 被 ignored-patterns 忽略掉的
-# zstyle ':completion:*' completer _expand_alias _complete _extensions _match _files
-# 由于某些 completer 调用的代价比较昂贵，第一次调用时不考虑它们
-zstyle -e ':completion:*' completer '
-  if [[ $_last_try != "$HISTNO$BUFFER$CURSOR" ]]; then
-    _last_try="$HISTNO$BUFFER$CURSOR"
-    reply=(_expand_alias _complete _extensions _match _files)
-  else
-    reply=(_complete _ignored _correct _approximate)
-  fi'
+# Use cache for commands using cache
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/.zcompcache"
 
-# 增强版文件名补全
-# 0 - 完全匹配 ( Abc -> Abc )      1 - 大写修正 ( abc -> Abc )
-# 2 - 单词补全 ( f-b -> foo-bar )  3 - 后缀补全 ( .cxx -> foo.cxx )
-zstyle ':completion:*:(argument-rest|files):*' matcher-list '' \
-    'm:{[:lower:]-}={[:upper:]_}' \
-    'r:|[.,_-]=* r:|=*' \
-    'r:|.=* r:|=*'
-# zstyle ':completion:*' matcher-list 'b:=*'
 
-# 不展开普通别名
-zstyle ':completion:*' regular false
+# 按 tab 时，无条件地启动选择菜单
+zstyle ':completion:*' menu true select
+# 显示选项和选项的详细描述，默认为 true，用 false 只显示选项
+zstyle ':completion:*' verbose true
 
-# 结果样式
-zstyle ':completion:*' menu yes select # search
-zstyle ':completion:*' list-grouped false
-zstyle ':completion:*' list-separator ''
-zstyle ':completion:*' group-name ''
-zstyle ':completion:*' verbose yes
-zstyle ':completion:*:matches' group 'yes'
+# Formatting The Display
+# %F{前景颜色} 内容 %f
+# %K{背景颜色} 内容 %k
+# %B 粗体 %b
+# %U 下划线 %u
+# %d 指 descriptions
+
+# zstyle ':completion:*' format 'Completing %d'
+zstyle ':completion:*:descriptions' format '%F{green}-- %d --%f'
+# corrections 是 _approximate 和 _correct completers 使用的
+zstyle ':completion:*:corrections' format '%F{yellow}!- %d (errors: %e) -!%f'
+zstyle ':completion:*:messages' format ' %F{purple} -- %d --%f'
 zstyle ':completion:*:warnings' format '%F{red}%B-- No match for: %d --%b%f'
-zstyle ':completion:*:messages' format '%d'
-zstyle ':completion:*:corrections' format '%B%d (errors: %e)%b'
-zstyle ':completion:*:descriptions' format '[%d]'
+# zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
 
-# 补全当前用户所有进程列表
-zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm,cmd -w -w"
-zstyle ':completion:*:kill:*' ignored-patterns '0'
+# 候选项分组，并且将 tag 名作为 group name
+zstyle ':completion:*' group-name ''
+# 分组的顺序，-command- 指任何在 command position 的 word
+zstyle ':completion:*' group-order original corrections
+# group name 见 /usr/share/zsh/functions/Completion/Zsh/_command_names
+zstyle ':completion:*:*:-command-:*:*' group-order reserved-words parameters aliases builtins functions commands
 
-# complete manual by their section, from grml
+
+# 列出文件详细信息
+# zstyle ':completion:*' file-list all
+
+
+# 默认情况下会补全 // 中间的目录
+# 这个选项将 // 视作 /
+# zstyle ':completion:*' squeeze-slashes true
+
+# cd -TAB 显示 directory stack entry
+zstyle ':completion:*' complete-options true
+
+
+# zstyle ':completion:*' list-grouped false
+# zstyle ':completion:*' list-separator ''
+# zstyle ':completion:*:matches' group 'yes'
+# zstyle ':completion:*:warnings' format '%F{red}%B-- No match for: %d --%b%f'
+# zstyle ':completion:*:messages' format '%d'
+# zstyle ':completion:*:corrections' format '%B%d (errors: %e)%b'
+# zstyle ':completion:*:descriptions' format '[%d]'
+
+
+# Kill
+zstyle ':completion:*:*:*:*:processes' command 'ps -u $LOGNAME -o pid,user,command -w'
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;36=0=01'
+zstyle ':completion:*:*:kill:*' menu yes select
+zstyle ':completion:*:*:kill:*' force-list always
+zstyle ':completion:*:*:kill:*' insert-ids single
+
+# Man
 zstyle ':completion:*:manuals'    separate-sections true
 zstyle ':completion:*:manuals.*'  insert-sections   true
 
-# 补全第三方 Git 子命令
-# 直接用 git-extras 提供的补全更好
-# zstyle ':completion:*:*:git:*' user-commands ${${(M)${(k)commands}:#git-*}/git-/}
 
-# zwc 什么的忽略掉吧
-# FIXME: 导致 zmodload 的补全结果出现其他文件
-# zstyle ':completion:*:*:*:*'   file-patterns '^*.(zwc|pyc):compiled-files' '*:all-files'
-# zstyle ':completion:*:*:rm:*'  file-patterns '*:all-files'
-# zstyle ':completion:*:*:gio:*' file-patterns '*:all-files'
+# =========================================
 
-# 允许 docker 补全时识别 -it 之类的组合命令
-zstyle ':completion:*:*:docker:*' option-stacking yes
-zstyle ':completion:*:*:docker-*:*' option-stacking yes
+# 不显示特殊目录 . 和 ..
+zstyle ':completion:*' special-dirs false
 
-# color
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+# Standard style used by default for 'list-colors'
+LS_COLORS=${LS_COLORS:-'di=34:ln=35:so=32:pi=33:ex=31:bd=36;01:cd=33;01:su=31;40;07:sg=36;40;07:tw=32;40;07:ow=33;40;07:'}
+# 文件颜色
+# zstyle ':completion:*' list-colors ''
+# 这里建议加双引号，因为 ${(s.:.)LS_COLORS} 可能是空的
+# zstyle ':completion:*:default' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+# LS_COLORS 指的应该就是 ls 命令输出的文件色彩
 
-# fg/bg 补全时使用 jobs id
-zstyle ':completion:*:jobs' verbose true
-zstyle ':completion:*:jobs' numbers true
 
-# 单词中也进行补全
-setopt complete_in_word
-setopt no_beep
+# =========================================

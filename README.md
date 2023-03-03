@@ -12,7 +12,7 @@
 ❯ vim zsh/.config/zsh/.zshrc
 # 安装 stow
 ❯ sudo pacman -S --needed stow
-❯ stow zsh
+❯ stow zsh -t /home/hyuuko
 ❯ ls -l ~/.zshenv ~/.config/zsh
 lrwxrwxrwx 1 hyuuko hyuuko 27 Nov 27 14:38 /home/hyuuko/.config/zsh -> ../dotfiles/zsh/.config/zsh
 lrwxrwxrwx 1 hyuuko hyuuko 20 Nov 27 14:53 /home/hyuuko/.zshenv -> dotfiles/zsh/.zshenv
@@ -31,3 +31,9 @@ lrwxrwxrwx 1 hyuuko hyuuko 20 Nov 27 14:53 /home/hyuuko/.zshenv -> dotfiles/zsh/
 ## 参考
 
 - [Aloxaf/dotfiles](https://github.com/Aloxaf/dotfiles)
+
+注意：`systemd/.config/systemd/user/default.target.wants/unblockneteasemusic.service` 里有 QQ cookie。。
+
+## 注意
+
+- [etc](./etc/) 是放在根目录里的

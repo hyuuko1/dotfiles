@@ -1,24 +1,52 @@
+# $CARGO_HOME/config.toml which defaults to:
+#   Windows: %USERPROFILE%\.cargo\config.toml
+#   Unix: $HOME/.cargo/config.toml
+#
+# See https://doc.rust-lang.org/cargo/reference/config.html
+
 [source.crates-io]
 # registry = "https://github.com/rust-lang/crates.io-index"
 # 替换成你偏好的镜像源
+# To use sparse index, change 'rsproxy' to 'rsproxy-sparse'
+# replace-with = 'rsproxy-sparse'
 replace-with = 'rsproxy'
 
-# 字节
+# 字节跳动
 [source.rsproxy]
 registry = "https://rsproxy.cn/crates.io-index"
+[registries.rsproxy]
+index = "https://rsproxy.cn/crates.io-index"
+# 字节跳动 Sparse Index
+# https://bytedance.feishu.cn/docs/doccn8vZuDB541t8zTJyTUbZZxc#c7jI4q
+[source.rsproxy-sparse]
+registry = "sparse+https://rsproxy.cn/index/"
+
+# Rust 中国社区 https://rust-lang.pub/
+[source.rustpub]
+registry = "https://proxy.rust-lang.pub/crates.io-index"
+[registries.rustpub]
+index = "https://proxy.rust-lang.pub/crates.io-index"
 
 # 清华大学
 [source.tuna]
 registry = "https://mirrors.tuna.tsinghua.edu.cn/git/crates.io-index.git"
 
-# 中国科学技术大学
-[source.ustc]
-registry = "git://mirrors.ustc.edu.cn/crates.io-index"
-
 # 上海交通大学
 [source.sjtu]
 registry = "https://mirrors.sjtug.sjtu.edu.cn/git/crates.io-index"
 
-# rustcc社区
-[source.rustcc]
-registry = "git://crates.rustcc.cn/crates.io-index"
+[net]
+git-fetch-with-cli = true # use the `git` executable for git operations
+
+[build]
+# pacman -S sccache
+rustc-wrapper = "/usr/bin/sccache" # run this wrapper instead of `rustc`
+
+# mold currently supports x86-64, i386, ARM32, ARM64 and 64-bit RISC-V.
+# for more target_arch, see `rustc --print target-list`
+# [target.'cfg(any(target_arch = "x86", target_arch = "x86_64", target_arch = "arm", target_arch = "aarch64", target_arch = "riscv64"))']
+# 编译 riscv64gc-unknown-none-elf 的时候，rustc 会调用 rust-lld 来链接，报错：rust-lld: error: unknown argument '-fuse-ld=mold'
+[target.x86_64-unknown-linux-gnu]
+# pacman -S mold
+# 参数 -C link-arg=-fuse-ld=mold 会经由 rustc 传给 cc
+rustflags = ["-C", "link-arg=-fuse-ld=mold"]

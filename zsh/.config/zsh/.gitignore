@@ -1,4 +1,3 @@
-# 此目录为 zsh 的 ZDOTDIR
 .z
 .zcompdump
 .zcompcache
@@ -9,7 +8,10 @@
 
 zinit/completions
 zinit/module
-zinit/plugins
+zinit/plugins/*
+# local plugins
+!zinit/plugins/_local---*
+zinit/plugins/_local---zinit
 zinit/polaris
 zinit/services
 zinit/snippets
