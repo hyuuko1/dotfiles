@@ -12,6 +12,7 @@
 ❯ vim zsh/.config/zsh/.zshrc
 # 安装 stow
 ❯ sudo pacman -S --needed stow
+# 让 zsh 目录下的配置生效（实际上就是创建了一些符号链接）
 ❯ stow zsh -t /home/hyuuko
 ❯ ls -l ~/.zshenv ~/.config/zsh
 lrwxrwxrwx 1 hyuuko hyuuko 27 Nov 27 14:38 /home/hyuuko/.config/zsh -> ../dotfiles/zsh/.config/zsh
@@ -25,6 +26,7 @@ lrwxrwxrwx 1 hyuuko hyuuko 20 Nov 27 14:53 /home/hyuuko/.zshenv -> dotfiles/zsh/
 
 ❯ sudo pacman -S --needed hyperfine
 # 测试 zsh 的启动速度
+# 3~5 ms !!! 厉害吧
 ❯ hyperfine "zsh -i -c exit" --warmup 10 -N
 Benchmark 1: zsh -i -c exit
   Time (mean ± σ):       4.5 ms ±   0.6 ms    [User: 3.0 ms, System: 1.3 ms]
@@ -34,8 +36,6 @@ Benchmark 1: zsh -i -c exit
 ## 参考
 
 - [Aloxaf/dotfiles](https://github.com/Aloxaf/dotfiles)
-
-注意：`systemd/.config/systemd/user/default.target.wants/unblockneteasemusic.service` 里有 QQ cookie。。
 
 ## 注意
 
