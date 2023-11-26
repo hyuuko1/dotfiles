@@ -65,8 +65,9 @@ pacman -Qkk $(pacman -Qqe) 2>修改过的文件.txt
 sudo paccheck --quiet --require-mtree --files --file-properties --backup --noextract --noupgrade --db-files
 # 会搜索所有的 pacnew 和 pacsave 文件并询问要执行的操作
 pacdiff
-# TODO 检查多余的文件（只检查 /etc /usr /opt）
 ```
+
+**检查多于的、丢失的、备份的文件 `sudo pacreport --unowned-files --missing-files --backups`**
 
 ## Tips and tricks
 

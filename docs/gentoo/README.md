@@ -1,3 +1,3 @@
 - [Gentoo Wiki](https://wiki.gentoo.org/wiki/Main_Page)
 - [Handbook:Main Page - Gentoo Wiki](https://wiki.gentoo.org/wiki/Handbook:Main_Page)
-  - [Gentoo X86 Handbook - Gentoo Wiki](https://wiki.gentoo.org/wiki/Handbook:X86)
+  - [Gentoo AMD64 Handbook - Gentoo Wiki](https://wiki.gentoo.org/wiki/Handbook:AMD64)

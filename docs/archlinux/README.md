@@ -386,6 +386,8 @@ GRUB_SAVEDEFAULT=true
 GRUB_DISABLE_OS_PROBER=false
 ```
 
+XXX 注意：如果 esp 分区是 /boot/efi，那么别设置 GRUB_DEFAULT 和 GRUB_SAVEDEFAULT 会报错！[GRUB error: sparse file not allowed - Support - Manjaro Linux Forum](https://forum.manjaro.org/t/grub-error-sparse-file-not-allowed/20267/4) 这是因为 grub 想要写入 /boot/grub/grubenv 因此要么把 /boot 改成 ext 或 vfat 文件系统，要么就别用这个功能。
+
 最后 `sudo grub-mkconfig -o /boot/grub/grub.cfg` 更新配置文件，如果是双系统，输出中应该有 `Found Windows Boot Manager ...` 字样。
 
 注意：

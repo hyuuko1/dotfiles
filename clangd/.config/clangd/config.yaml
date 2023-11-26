@@ -4,53 +4,9 @@
 # https://gcc.gnu.org/onlinedocs/gcc/Option-Index.html
 
 Diagnostics:
+  ClangTidy:
+    Remove:
+      # 避免 Suspicious usage of 'sizeof(A*)'; pointer to aggregate
+      - bugprone-sizeof-expression
+  # 检查是否有不必要的 include
   UnusedIncludes: Strict
-
-# Fragment common to C and C++ source files
-# C 和 C++ 共用的编译参数
-CompileFlags:
-  # Remove:
-  # - -xobjective-c++-header # 根据 vscode 里的日志，会自动加上这个，有点奇怪捏
-  Add:
-    - -pedantic # 如果代码不符合 ISO 标准（而是使用了编译器扩展），警告。
-    # - -pedantic-errors
-    - -Wall
-    - -Wextra
-    - -Wcast-align
-    - -Wdouble-promotion
-    - -Wformat=2
-    - -Wimplicit-fallthrough
-    - -Wmisleading-indentation
-    - -Wnon-virtual-dtor
-    - -Wnull-dereference
-    - -Wold-style-cast
-    - -Woverloaded-virtual
-    - -Wshadow
-    - -Wunused
-    - -Wno-empty-translation-unit # 不要警告 -Wempty-translation-unit
-    - -pthread
-    # - -fuse-ld=lld
-    - -fsanitize=address
-    - -fsanitize=undefined
-    # 默认情况是 c17，通过 #if __STDC_VERSION__ == 201710L 判断的
-    - -std=c17 # 可 c17 gun17 c2x 等等，
-
-# 不同的 If 需要用 --- 分隔开
----
-# Fragment specific to C++ source files
-# 对 C++ 专用的
-If:
-  PathExclude: [.*\.c] # 除了 .c 以外的文件 (.cc .cpp .h)
-CompileFlags:
-  Remove:
-    - -std=c17
-    # - -resource-dir=*
-  Add:
-    - -std=c++20
-    # - -stdlib=libstdc++ # 这个是 C++ 标准库的 GNU 实现，如果 pacman -S gcc 了，默认就是这个
-    # - -stdlib=libc++ # 这个是 C++ 标准库的 LLVM 实现，需要 pacman -S libc++
-    # - -xc++ # 将所有文件都当作 C++，如果不用这个选项，-std=c++2b 会让 c 会报错
-    # - -std=c++2b # 即 c++23
-    - --driver-mode=g++
-  Compiler: clang++
-#TODO 试试 clangd 会把 .hpp cstdio 当成 c 还是 c++ header

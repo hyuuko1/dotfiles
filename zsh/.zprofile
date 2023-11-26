@@ -19,19 +19,19 @@ if [[ ! -d /run/user/1000/Code ]]; then
      mkdir -p "/run/user/1000/Code/Cache/"
      mkdir -p "/run/user/1000/Code/GPUCache/"
      mkdir -p "/run/user/1000/Code/DawnCache/"
-#     mkdir -p "/run/user/1000/Code/Local Storage/leveldb/"
+     mkdir -p "/run/user/1000/Code/Local Storage/leveldb/"
      mkdir -p "/run/user/1000/Code/logs/"
-#     mkdir -p "/run/user/1000/Code/Session Storage/"
-#     mkdir -p "/run/user/1000/Code/User/History/"
-#     mkdir -p "/run/user/1000/Code/User/globalStorage"
-#     mkdir -p "/run/user/1000/Code/User/workspaceStorage"
+     mkdir -p "/run/user/1000/Code/Session Storage/"
+     mkdir -p "/run/user/1000/Code/User/History/"
+     mkdir -p "/run/user/1000/Code/User/globalStorage"
+     mkdir -p "/run/user/1000/Code/User/workspaceStorage"
 
-#     cp ~/.config/Code/User/globalStorage/state.vscdb.backup /run/user/1000/Code/User/globalStorage/state.vscdb
+     cp ~/.config/Code/User/globalStorage/state.vscdb.backup /run/user/1000/Code/User/globalStorage/state.vscdb
 
-#     touch "/run/user/1000/Code/Network Persistent State"
-#     touch "/run/user/1000/Code/Preferences"
-#     touch "/run/user/1000/Code/TransportSecurity"
+     touch "/run/user/1000/Code/Network Persistent State"
+     touch "/run/user/1000/Code/Preferences"
+     touch "/run/user/1000/Code/TransportSecurity"
 
-#     mkdir -p /run/user/1000/.cache/mesa_shader_cache
-#     mkdir -p /run/user/1000/edge-cache
+     mkdir -p /run/user/1000/.cache/mesa_shader_cache
+     mkdir -p /run/user/1000/edge-cache
 fi

@@ -5,23 +5,22 @@ alias man-cn='LANG=zh_CN.UTF-8 man' # 查看中文手册
 alias cat='/usr/bin/bat --style=plain --theme=Coldark-Dark'
 alias paru='paru --bottomup'
 
-alias l='/usr/bin/exa -F'
-alias l.='/usr/bin/exa -Fd .*'
-alias la='/usr/bin/exa -Fa'
-alias ll='/usr/bin/exa -Flbh --time-style long-iso'
-alias ll.='/usr/bin/exa -Fdlbh --time-style long-iso .*'
-alias lla='/usr/bin/exa -Falbh --time-style long-iso'
+alias l='/usr/bin/eza -F'
+alias l.='/usr/bin/eza -Fd .*'
+alias la='/usr/bin/eza -Fa'
+alias ll='/usr/bin/eza -Flbh --time-style long-iso'
+alias ll.='/usr/bin/eza -Fdlbh --time-style long-iso .*'
+alias lla='/usr/bin/eza -Falbh --time-style long-iso'
 alias lsa='/usr/bin/ls -lah'
-alias lt='/usr/bin/exa -FT'
-alias tree='/usr/bin/exa -FT'
-alias llt='/usr/bin/exa -FTl --time-style long-iso'
+alias lt='/usr/bin/eza -FT'
+alias tree='/usr/bin/eza -FT'
+alias llt='/usr/bin/eza -FTl --time-style long-iso'
 
 # TIM 有时候会卡死，只好鲨了
 alias fuckTIM='kill $(pgrep TIM.exe)'
 alias fuckQQ='kill $(pgrep QQ.exe)'
 
 # alias show-v2raya-log='sudo tail -n 30 -f /tmp/v2raya.log | lnav'
-
 
 # https://wiki.archlinux.org/title/Color_output_in_console
 alias diff='diff --color=auto'

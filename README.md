@@ -23,9 +23,12 @@ lrwxrwxrwx 1 hyuuko hyuuko 20 Nov 27 14:53 /home/hyuuko/.zshenv -> dotfiles/zsh/
 # build the zinit-module https://github.com/zdharma-continuum/zinit-module
 ❯ zinit module build
 
-# 测试启动速度
 ❯ sudo pacman -S --needed hyperfine
-❯ hyperfine "zsh -i -c exit" --warmup 10
+# 测试 zsh 的启动速度
+❯ hyperfine "zsh -i -c exit" --warmup 10 -N
+Benchmark 1: zsh -i -c exit
+  Time (mean ± σ):       4.5 ms ±   0.6 ms    [User: 3.0 ms, System: 1.3 ms]
+  Range (min … max):     2.2 ms …   5.9 ms    627 runs
 ```
 
 ## 参考

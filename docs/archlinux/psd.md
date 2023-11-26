@@ -46,7 +46,7 @@ vsocde，每个工作区（窗口）的状态被修改时（比如鼠标选择�
 
 ```bash
 ❯ ln -sf /run/user/1000/edge-cache ~/.cache/microsoft-edge
-
+❯ ln -sf /run/user/1000/Microsoft ~/.cache/Microsoft
 ❯ ln -sf /run/user/1000/icon-cache.kcache ~/.cache/icon-cache.kcache
 ❯ ln -sf /run/user/1000/plasma_theme_Layan_v0.1.kcache ~/.cache/plasma_theme_Layan_v0.1.kcache
 

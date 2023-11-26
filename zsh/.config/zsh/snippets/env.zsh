@@ -94,7 +94,7 @@ export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib
 [ -f "$HOME/.ghcup/env" ] && source "$HOME/.ghcup/env" # ghcup-env
 
 # 使用 [fnm](https://github.com/Schniz/fnm) 管理 node 版本
-# 需要先 paru fnm-bin
+# 需要先 paru -S fnm
 # dist mirror 是 https://npmmirror.com/mirrors/node/
 # registry mirror 是 https://registry.npmmirror.com
 if (( ${+commands[fnm]} )); then
@@ -119,6 +119,8 @@ export LESS='-R --use-color -Dd+g$Du+b'
 # export MANPAGER='sh -c "col -bx | bat -pl man --theme=Coldark-Dark"'
 # export MANROFFOPT='-c'
 
+# 默认使用 system-level 的 libvirtd
+export LIBVIRT_DEFAULT_URI="qemu:///system"
 
 # TODO
 #############   插件 larkery/zsh-histdb 需要的设置   #############
