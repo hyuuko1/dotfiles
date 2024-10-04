@@ -836,11 +836,11 @@ spectacle
 # 聊天工具
 # Telegram，简体中文语言包：https://t.me/setlanguage/zhcncc
 paru --needed telegram-desktop
-# linuxqq
+# linuxqq https://wiki.archlinuxcn.org/wiki/%E8%85%BE%E8%AE%AFQQ
 # 聊天记录保存在 ~/.config/QQ/ 文件默认保存在 ~/Downloads
 # 如果闪退，安装回 2:3.0.0_571-1 版本
 # 或者 rm -rf ~/.config/QQ/crash_files && ln -sf /dev/null ~/.config/QQ/crash_files
-paru -S linuxqq
+paru -S linuxqq-nt-bwrap
 
 # 百度网盘 网抑云 钉钉 xmind
 paru --needed baidunetdisk-bin netease-cloud-music-gtk dingtalk-electron xmind-2020
@@ -916,6 +916,8 @@ paru fastocr
 见 [kwallet](./kwallet.md)
 
 ### 调整鼠标滚轮速度
+
+**已弃用，我现在直接在系统设置里设置的滚动速度**
 
 系统设置里只能调整鼠标滚轮的全局速度。如果要针对某个应用程序，就需要使用 imwheel。
 

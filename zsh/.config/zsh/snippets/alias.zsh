@@ -6,15 +6,15 @@ alias cat='/usr/bin/bat --style=plain --theme=Coldark-Dark'
 alias paru='paru --bottomup'
 
 alias l='/usr/bin/eza -F'
-alias l.='/usr/bin/eza -Fd .*'
-alias la='/usr/bin/eza -Fa'
-alias ll='/usr/bin/eza -Flbh --time-style long-iso'
-alias ll.='/usr/bin/eza -Fdlbh --time-style long-iso .*'
-alias lla='/usr/bin/eza -Falbh --time-style long-iso'
+alias l.='/usr/bin/eza -F -d .*'
+alias la='/usr/bin/eza -F -a'
+alias ll='/usr/bin/eza -F -lbh --time-style long-iso'
+alias ll.='/usr/bin/eza -F -dlbh --time-style long-iso .*'
+alias lla='/usr/bin/eza -F -albh --time-style long-iso'
 alias lsa='/usr/bin/ls -lah'
-alias lt='/usr/bin/eza -FT'
-alias tree='/usr/bin/eza -FT'
-alias llt='/usr/bin/eza -FTl --time-style long-iso'
+alias lt='/usr/bin/eza -F -T'
+alias tree='/usr/bin/eza -F -T'
+alias llt='/usr/bin/eza -F -T -l --time-style long-iso'
 
 # TIM 有时候会卡死，只好鲨了
 alias fuckTIM='kill $(pgrep TIM.exe)'
@@ -38,3 +38,17 @@ alias zls="$HOME/.config/Code/User/globalStorage/augusterame.zls-vscode/zls_inst
 
 # 解压 zip 乱码时使用
 alias unar="/usr/bin/unar -e gb18030"
+
+alias rq="/data/os-code/scripts/run-qemu.sh"
+
+# make kernel
+alias mk="make LLVM=1 O=out/x86_64 -j$(nproc)"
+alias mkv="make LLVM=1 O=out/x86_64 -j$(nproc) vmlinux"
+alias mkm="make LLVM=1 O=out/x86_64 -j$(nproc) menuconfig"
+alias mks="make LLVM=1 O=out/x86_64 -j$(nproc) savedefconfig"
+alias mko="make LLVM=1 O=out/x86_64 -j$(nproc) olddefconfig"
+alias mkc="make LLVM=1 O=out/x86_64 -j$(nproc) compile_commands.json"
+alias mki="sudo make LLVM=1 O=out/x86_64 -j$(nproc) INSTALL_MOD_PATH=/data/VMs/fedora_rootfs modules_install"
+alias gai="gdb-add-index out/x86_64/vmlinux"
+
+alias clr="printf \\x1bc"

@@ -12,7 +12,11 @@ min_time = 0
 show_milliseconds = true
 
 [directory]
-fish_style_pwd_dir_length = 3
+# disabled = true
+# fish_style_pwd_dir_length = -1
+fish_style_pwd_dir_length = 99
+# truncation_length = 10
+# truncate_to_repo = false
 
 # show the current shell level $SHLVL
 [shlvl]

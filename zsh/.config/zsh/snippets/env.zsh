@@ -1,6 +1,6 @@
 # 开启代理
 pon() {
-    local proxy=http://${1-'127.0.0.1'}:${2-'7890'}
+    local proxy=http://${1-'127.0.0.1'}:${2-'7897'}
     export all_proxy=$proxy http_proxy=$proxy https_proxy=$proxy ftp_proxy=$proxy
 }
 # 关闭代理
@@ -8,7 +8,7 @@ poff() {
     unset all_proxy http_proxy https_proxy ftp_proxy
     echo "代理关闭！"
 }
-# pon
+pon
 
 # 调整亮度
 brightness() {

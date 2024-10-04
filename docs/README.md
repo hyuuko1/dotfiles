@@ -75,10 +75,14 @@ dwm
 - [Plasma/Wayland/Nvidia - KDE Community Wiki](https://community.kde.org/Plasma/Wayland/Nvidia)
   Plasma/Wayland/Nvidia 官方指南
 
-`paru -S plasma-wayland-session`
+`paru -S plasma-workspace`
 
+我目前用的独显模式，安装的 nvidia 而非 nvidia-open，感觉闭源的更稳定。
+根据[NVIDIA - ArchWiki](https://wiki.archlinux.org/title/NVIDIA)
 目前 Wayland 只能在使用了 KMS 的系统上工作，也就是说需要 enable DRM (Direct Rendering Manager) kernel mode setting，
 `sudo vim /etc/default/grub` 添加内核参数 `nvidia_drm.modeset=1`，然后 `sudo grub-mkconfig -o /boot/grub/grub.cfg` 重新生成 grub 配置文件。
+把 `nvidia_drm.fbdev=1` 也加上，
+根据 [NVIDIA/Tips and tricks - ArchWiki](https://wiki.archlinux.org/title/NVIDIA/Tips_and_tricks) 和 https://bugs.kde.org/show_bug.cgi?id=448866，要把 `nvidia.NVreg_PreserveVideoMemoryAllocations=1` 也加上，并且 sudo systemctl enable nvidia-suspend.service, nvidia-hibernate.service, nvidia-resume.service
 
 - 注意，下面这几步生成 initramfs 的可以跳过，实测不影响
   `sudo vim /etc/mkinitcpio.conf`，在 `MODULES` 里添加 `nvidia nvidia_modeset nvidia_uvm nvidia_drm` 这几个内核模块，如果是 I+N 双显卡的用户最好再额外添加 `intel_agp i915` 两个内核模块。

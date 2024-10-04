@@ -28,7 +28,7 @@
   kill $(pgrep TIM.exe)
   # 如果还不行，就只好 sudo systemctl restart sddm 了
   ```
-- 如果新安装的软件在菜单中找不到，可以试试 `rm ~/.cache/icon-cache.kcache`
+- 如果新安装的软件在菜单中找不到，可以试试 `rm ~/.cache/icon-cache.kcache` 清除图标缓存
 - 禁止 DiscoverNotifier 自启动
   ```bash
   cp /etc/xdg/autostart/org.kde.discover.notifier.desktop ~/.config/autostart
@@ -40,7 +40,7 @@
   还有 `systemctl --user mask plasma-baloorunner.service`
 - telegram 图标分辨率太低
   ```bash
-  # 生成 ~/.local/share/applications//usr/share/applications/org.telegram.desktop.desktop 里的 Exec 字段，unset 环境变量 QT_SCREEN_SCALE_FACTORS
+  # 生成 ~/.local/share/applications/ /usr/share/applications/org.telegram.desktop.desktop 里的 Exec 字段，unset 环境变量 QT_SCREEN_SCALE_FACTORS
   desktop-file-install --dir ~/.local/share/applications/ --set-key=Exec --set-value="env -u QT_SCREEN_SCALE_FACTORS telegram-desktop -- %u" /usr/share/applications/org.telegram.desktop.desktop
   ```
 - 禁用 geoclue service

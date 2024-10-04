@@ -1,7 +1,9 @@
 - [daeuniverse/dae: A Linux high-performance transparent proxy solution based on eBPF.](https://github.com/daeuniverse/dae)
   - [Quick Start Guide | Dae](https://dae.v2raya.org/docs/current/quick-start)
-- [ ] [daeuniverse/daed: \[WIP\] daed, A Modern Dashboard For dae](https://github.com/daeuniverse/daed)
-      dae 的图形界面
+- [daeuniverse/daed: daed, a modern dashboard for dae.](https://github.com/daeuniverse/daed)
+  **daed 的图形界面**，不需要自己写配置，强烈推荐。
+
+如果想要代理虚拟机，在 daed 的配置界面，config 那里，lanInterface 加上 virbr0 即可。
 
 ```bash
 # archlinuxcn 有已构建好的包
@@ -61,7 +63,9 @@ subscription {
     # nanoPort: 'file://../../home/hyuuko/.config/clash-verge/profiles/nanoPort.yaml'
 
     # nanoPort 是一个 tag
-    nanoPort: 'https://subv5.nanoport.xyz/api/v1/client/subscribe?token=xxx'
+    # nanoPort: 'https://subv5.nanoport.xyz/api/v1/client/subscribe?token=xxx'
+
+    CNIX: 'https://sk.saphirodoriko.com/link/EgWxyFC6b9p8Y0ix?sub=1'
 }
 
 # Nodes defined here will be merged as a part of the global node pool.
@@ -115,7 +119,7 @@ group {
   # proxy 是一个 group 名字
   proxy {
     # 从 global node pool 过滤 nodes
-    filter: name(keyword: '港') && !name(keyword: '10x', keyword: '20x', keyword: '30x', keyword: '40x', keyword: '50x', keyword: '官网', keyword: '群组')
+    # filter: name(keyword: '港') && !name(keyword: '10x', keyword: '20x', keyword: '30x', keyword: '40x', keyword: '50x', keyword: '官网', keyword: '群组')
     # filter: name(keyword: '日本')
     # filter: name(keyword: '狮城')
 

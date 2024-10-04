@@ -195,3 +195,39 @@ H.265 supports up to 8192×4320
   - 2018 年的技术，基本上只有最新的 gpu 支持。NVIDIA RTX 30 系列或 AMD Radeon RX 6000 系列
 
 HEVC 和 AV1 的压缩率都差不多。
+
+## 2024/9/22 NVIDIA 不行
+
+- 🌟 [Hardware video acceleration in webbrowsers in Linux - nothing works anymore : r/linux](https://www.reddit.com/r/linux/comments/1b4e53r/hardware_video_acceleration_in_webbrowsers_in/)
+  NVIDIA firefox 可以，但 chromium 不行
+
+## 2024/9/22 intel 显卡，edge 已经完美支持硬解！！！
+
+- [Hardware video acceleration - ArchWiki](https://wiki.archlinux.org/title/Hardware_video_acceleration)
+- [Chromium - ArchWiki](https://wiki.archlinux.org/title/Chromium#Hardware_video_acceleration)
+
+- [\[超详细\] 在 Edge/Chrome 浏览器上为 B 站开启 HEVC 硬解和 AV1 硬解 - 哔哩哔哩](https://www.bilibili.com/read/cv16485256/)
+
+archwiki 里讲了几种验证方式，使用 `sudo intel_gpu_top` 命令，如果 Video 一栏不是 0.00% 则说明在进行硬解！
+
+测试视频 https://www.bilibili.com/video/BV11f4y1K7Wx
+可以选择 AV1, HEVC, AVC
+
+AV1 和 AVC 都测试成功！
+但选择 HEVC 时，B 站播放的是 AVC 编码的，看直播时，有时是 HEVC 编码，也能硬解！
+
+```conf
+--ignore-gpu-blocklist
+--enable-zero-copy
+--enable-features=VaapiVideoDecodeLinuxGL
+```
+
+多个 `--enable-features` 选项的值要用逗号隔开。
+
+以后看视频都选择 AV1 编码的！
+
+在 edge://gpu/ 在后面可以看到一个表 Video Acceleration Information
+
+--ozone-platform-hint=auto 开启原生 wayland 支持，开了后会变糊，不建议开。
+
+**注意，别用 linux-zen，可能有些问题**

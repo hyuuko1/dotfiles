@@ -3,12 +3,16 @@
 
 # https://github.com/fcitx/fcitx5/issues/295#issuecomment-893188937
 # 设置为 fcitx 会有更大的兼容性，因为一些旧的应用程序可能只支持 fcitx4 im 模块
-export XIM=fcitx
-export XIM_PROGRAM=fcitx
+export XMODIFIERS=@im=fcitx
+# wayland 情况下，这两个不再需要
+# export XIM=fcitx
+# export XIM_PROGRAM=fcitx
+# https://fcitx-im.org/wiki/Using_Fcitx_5_on_Wayland#KDE_Plasma
+# 这两个也别设置了
 export GTK_IM_MODULE=fcitx
 export QT_IM_MODULE=fcitx
-export XMODIFIERS=@im=fcitx
 # SDL 必须用 fcitx5，否则会套用对 fcitx4 的特殊处理导致 fcitx5 启动失败
+# 是为了让一些使用特定版本 SDL2 库的游戏能正常使用输入法。
 export SDL_IM_MODULE=fcitx5
 
 # 使用 Dolphin file open dialog 而非默认的 gtk

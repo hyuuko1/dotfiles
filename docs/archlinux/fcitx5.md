@@ -1,4 +1,6 @@
 - [Fcitx5 (简体中文) - ArchWiki](<https://wiki.archlinux.org/index.php/Fcitx5_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)>)
+- 🌟 https://fcitx-im.org/wiki/Using_Fcitx_5_on_Wayland#KDE_Plasma
+  先 kill 掉任何 fcitx5 进程，然后：系统设置->输入设备->虚拟键盘。选择 Fcitx5。然后 Fcitx5 就会在 Wayland 下启动。
 
 ```bash
 pacman -S --needed fcitx5-{im,material-color,chinese-addons} fcitx5-pinyin-{zhwiki,moegirl}
@@ -7,9 +9,10 @@ pacman -S --needed fcitx5-{im,material-color,chinese-addons} fcitx5-pinyin-{zhwi
 `vim ~/.xprofile`，添加：
 
 ```conf
-export INPUT_METHOD=fcitx5
-export GTK_IM_MODULE=fcitx5
-export QT_IM_MODULE=fcitx5
+export INPUT_METHOD=5
+# 这两个不再推荐使用。
+#export GTK_IM_MODULE=fcitx5
+#export QT_IM_MODULE=fcitx5
 export XMODIFIERS=\@im=fcitx5
 ```
 

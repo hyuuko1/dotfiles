@@ -38,7 +38,7 @@ ThinkPad 电池那一栏，只勾选 `STOP_CHARGE_THRESH_BAT0=1`，保存，STOP
 经过测试，这个值实际上是 80%。貌似是低于 60% 后就会充电到 80%。
 
 ```bash
-❯
+❯ sudo tlp-stat -b
 --- TLP 1.5.0 --------------------------------------------
 
 +++ Battery Care

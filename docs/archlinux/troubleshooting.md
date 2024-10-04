@@ -93,6 +93,9 @@ https://zhuanlan.zhihu.com/p/80926040
   sudo pacman -S poppler-data
   ```
 - KDE 分区管理器（partitionmanager）不支持创建 exfat 分区。`sudo pacman -S exfatprogs` 即可（别用基于 fuse 的 exfat-utils）。
+- 用 Wayland 时，flameshot 没法截全屏
+  写个脚本，内容 `env XDG_SESSION_TYPE=x11 exec flameshot gui`
+  快捷键执行这个脚本
 
 ### vscode 鼠标右键单击变双击问题
 
@@ -202,3 +205,46 @@ sudo systemctl daemon-reload
 ```
 
 `paru upd72020x-fw`
+
+## 睡眠后立即被唤醒、睡眠后无法唤醒
+
+- [电源管理/挂起与休眠 - Arch Linux 中文维基](https://wiki.archlinuxcn.org/wiki/%E7%94%B5%E6%BA%90%E7%AE%A1%E7%90%86/%E6%8C%82%E8%B5%B7%E4%B8%8E%E4%BC%91%E7%9C%A0)
+- [电源管理/唤醒触发器 - Arch Linux 中文维基](https://wiki.archlinuxcn.org/wiki/%E7%94%B5%E6%BA%90%E7%AE%A1%E7%90%86/%E5%94%A4%E9%86%92%E8%A7%A6%E5%8F%91%E5%99%A8#%E6%8C%82%E8%B5%B7%E5%90%8E%E8%A2%AB%E7%AB%8B%E5%8D%B3%E5%94%A4%E9%86%92) 挂起后被立即唤醒
+
+好像是因为 BIOS 的 bug
+
+```log
+archlinux kernel: ACPI BIOS Error (bug): Could not resolve symbol [\_SB.PC00.LPCB.EC0._Q44.WM00], AE_NOT_FOUND (20240322/psargs-330)
+archlinux kernel: ACPI Error: Aborting method \_SB.PC00.LPCB.EC0._Q44 due to previous error (AE_NOT_FOUND) (20240322/psparse-529)
+```
+
+解决办法：
+
+```bash
+# 禁止被 USB 唤醒。再次执行这个命令，就会启用。
+# 如果不管用，就把 /proc/acpi/wakeup 里的挨个禁用试试
+❯ echo XHCI > /proc/acpi/wakeup
+
+# 测试下，睡眠后，按一下电源键就可以唤醒
+❯ systemctl sleep
+```
+
+启动时，自动禁用。参考论坛帖子，https://bbs.archlinux.org/viewtopic.php?pid=1575617#p1575617
+
+```bash
+sudo tee /etc/systemd/system/disable-usb-wakeup.service <<EOF
+[Unit]
+Description=Disable USB wakeup triggers in /proc/acpi/wakeup
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c "echo XHCI > /proc/acpi/wakeup"
+ExecStop=/bin/sh -c "echo XHCI > /proc/acpi/wakeup"
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+sudo systemctl enable --now disable-usb-wakeup.service
+```

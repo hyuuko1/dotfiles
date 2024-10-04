@@ -16,3 +16,6 @@
 - [ ] 优化 [ventureoo/ARU: Arch Linux Optimization Guide (RU) \[MIRROR\]](https://github.com/ventureoo/ARU)
 - [ ] gnome 里一些好用的软件，比如 gparted 啥的 https://archlinux.org/groups/x86_64/gnome/ https://archlinux.org/groups/x86_64/gnome-extra/
 - [ ] 如何使用 x86-64_v3
+  - [📈 给 Arch Linux 「大脑升级」到 x86-64-v3 / v4 架构，获得性能提升 - 風雪城](https://blog.chyk.ink/2022/08/11/arch-linux-upgrade-to-x86-64-v3-microarchitecture/)
+- [ ] [使用 atuin 管理 zsh 命令历史 - Aloxaf's Blog](https://www.aloxaf.com/2024/02/manage_zsh_shell_with_atuin/)
+- [⚙️ 我在使用 KDE Plasma 6 过程中的拓荒经验 - 風雪城](https://blog.chyk.ink/2024/05/03/plasma-6-tricks-and-optimizations/)
