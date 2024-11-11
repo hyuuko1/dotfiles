@@ -1,0 +1,15 @@
+# https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html
+[Unit]
+Description=virtiofsd share directory for fedora VM
+
+[Service]
+Type=simple
+Restart=on-success
+# --announce-submounts 是为了防止在 mount bind 的情况下数据出错
+# --uid-map=:namespace_uid:host_uid:count: 其中 namespace_uid 是指虚拟机内的 uid
+# --uid-map=:0:1000:1: 是指把虚拟机的 uid 0 映射到宿主机的 uid 1000
+# --uid-map=:1:100001:65535: 是指把虚拟机的 uid [1, 65536] 映射到宿主机的 uid [100001, 165536]
+ExecStart=/usr/lib/virtiofsd --shared-dir /data/VMs/fedora_rootfs --socket-path /tmp/vfsd.sock --announce-submounts --uid-map=:0:1000:1: --uid-map=:1:100001:65535: --gid-map=:0:1000:1: --gid-map=:1:100001:65535:
+
+[Install]
+WantedBy=default.target

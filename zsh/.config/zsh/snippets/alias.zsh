@@ -39,7 +39,8 @@ alias zls="$HOME/.config/Code/User/globalStorage/augusterame.zls-vscode/zls_inst
 # 解压 zip 乱码时使用
 alias unar="/usr/bin/unar -e gb18030"
 
-alias rq="/data/os-code/scripts/run-qemu.sh"
+# alias rq="/data/os-code/scripts/run-qemu.sh"
+alias rq="/data/blog/src/scripts/run-qemu.sh"
 
 # make kernel
 alias mk="make LLVM=1 O=out/x86_64 -j$(nproc)"
@@ -51,4 +52,4 @@ alias mkc="make LLVM=1 O=out/x86_64 -j$(nproc) compile_commands.json"
 alias mki="sudo make LLVM=1 O=out/x86_64 -j$(nproc) INSTALL_MOD_PATH=/data/VMs/fedora_rootfs modules_install"
 alias gai="gdb-add-index out/x86_64/vmlinux"
 
-alias clr="printf \\x1bc"
+alias clr='printf \\x1bc'

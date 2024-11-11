@@ -510,6 +510,17 @@ display server 通过 display server protocol 和 client (application) 进行通
 - [Xorg#Driver_installation - ArchWiki](https://wiki.archlinux.org/title/Xorg#Driver_installation)
 - [archlinux 显卡驱动 | archlinux 简明指南](https://arch.icekylin.online/guide/rookie/graphic-driver.html)
 
+在 linux 上，建议直接彻底不用 nvidia 显卡。
+
+禁用 nouveau，写配置文件，然后 `sudo mkinitcpio -P`。重启后，lspci 会看到没有 Kernel driver in use: nouveau 了，只剩下 Kernel modules: nouveau。这说明 nouveau 驱动没有与显卡设备绑定。这两个的区别见 https://unix.stackexchange.com/a/47240
+
+```conf
+# https://askubuntu.com/a/951892
+# /etc/modprobe.d/blacklist-nouveau.conf
+blacklist nouveau
+options nouveau modeset=0
+```
+
 先使用 `lspci | grep -e VGA -e 3D` 命令以查看显卡类型。
 
 - NVIDIA
@@ -519,7 +530,7 @@ display server 通过 display server protocol 和 client (application) 进行通
   pacman -S nvidia
   pacman -S nvidia-settings lib32-nvidia-utils
   ```
-  注：nvidia-utils 软件包里的 `/usr/lib/modprobe.d/nvidia-utils.conf` 禁用了 nouveau。
+  注：nvidia-utils 软件包里的 `/usr/lib/modprobe.d/nvidia-utils.conf` 禁用了 nouveau。（建议再加上 `options nouveau modeset=0` 参考 https://askubuntu.com/a/951892）
   另外请编辑 `/etc/mkinitcpio.conf`，在 HOOKS 一行删除 `kms` 并保存，然后执行 `mkinitcpio -P` 重新生成一次镜像。这能防止 initramfs 包含 nouveau 模块，避免 在 early boot 时 nouveau 和官方驱动的冲突。（如果没安装 xf86-video-nouveau，那可以略过这一步）
 - Intel
   不建议安装 `xf86-video-intel`，Xorg 会 fall back 到 kernel mode setting 驱动
@@ -849,6 +860,7 @@ paru --needed baidunetdisk-bin netease-cloud-music-gtk dingtalk-electron xmind-2
 paru --needed feeluown feeluown-qqmusic feeluown-netease
 # 可以搜索和播放来自网易云音乐，QQ音乐，酷狗音乐，酷我音乐，Bilibili，咪咕音乐网站的歌曲
 # listen1 也不错 http://listen1.github.io/listen1/
+# 更推荐 spotify https://open.spotify.com/
 
 # WPS 以及其部分可选依赖
 paru --needed wps-office-cn wps-office-mime-cn wps-office-mui-zh-cn
@@ -870,21 +882,6 @@ paru --needed neofetch exa bat lolcat fd tokei zenith-bin
 # 缺点：对 go 程序无效
 proxychains-ng
 
-# TODO 这部分删掉
-# 安装基于 Deepin wine6 版的 QQ
-# 遇到了问题去这里看看：https://github.com/countstarlight/deepin-wine-qq-arch/issues?q=
-paru --needed deepin-wine-qq
-# 进入 deepin-wine5 的设置界面，将 DPI 改为 120
-WINEPREFIX=~/.deepinwine/Deepin-QQ deepin-wine5 winecfg
-# simsun 字体问题：https://blog.zhullyb.top/2021/04/27/hide-simsun-from-deepin-wine-tim/
-# 我试了但是 doesn't work，最后直接把 simsun 删掉解决了问题。
-# deepin-wine6-stable 还有不少问题，比如不能记住密码，可以暂时使用 deepin-wine5
-paru --needed deepin-wine5
-# 将 run.sh 文件中的 deepin-wine6-stable 修改为 deepin-wine5
-vim /opt/apps/com.qq.office.deepin/files/run.sh
-# 删除原先安装的 QQ，用户数据在 ~/Documents/Tencent Files 里不会被删除
-rm -rf ~/.deepinwine/Deepin-QQ
-
 # 坚果云。如果打开的界面不能调整大小，按一下回车就好。如果实在用不了就手动安装官网的
 # https://www.jianguoyun.com/s/downloads/linux#install_for_kdexfce
 paru --needed nutstore
@@ -894,6 +891,7 @@ paru --needed nutstore
 paru ventoy-bin
 
 # 文字识别（需要配置好接口参数）
+# 也可以用 telegram 里的 OCR🤖
 paru fastocr
 ```
 

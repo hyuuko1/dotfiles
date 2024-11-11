@@ -50,3 +50,9 @@ resize2fs /dev/vda2
 #  convert an image to other formats
 qemu-img convert -f raw -O qcow2 input.img output.qcow2
 ```
+
+```bash
+
+sudo systemctl disable --now virtinterfaced-ro.socket virtinterfaced.socket virtinterfaced-admin.socket virtnetworkd-admin.socket virtnetworkd-ro.socket virtnetworkd.socket virtnodedevd.socket virtnodedevd-ro.socket virtnodedevd-admin.socket virtnwfilterd.socket virtnwfilterd-admin.socket virtnwfilterd-ro.socket virtqemud-ro.socket virtqemud.socket virtqemud-admin.socket virtsecretd.socket virtsecretd-ro.socket virtsecretd-admin.socket virtstoraged.socket virtstoraged-admin.socket virtstoraged-ro.socket virtinterfaced-ro.socket virtinterfaced.socket virtinterfaced-admin.socket virtnetworkd-admin.socket virtnetworkd-ro.socket virtnetworkd.socket virtnodedevd.socket virtnodedevd-ro.socket virtnodedevd-admin.socket virtnwfilterd.socket virtnwfilterd-admin.socket virtnwfilterd-ro.socket virtqemud-ro.socket virtqemud.socket virtqemud-admin.socket virtsecretd.socket virtsecretd-ro.socket virtsecretd-admin.socket virtstoraged.socket virtstoraged-admin.socket virtstoraged-ro.socket
+
+```
