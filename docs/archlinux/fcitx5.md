@@ -1,6 +1,24 @@
 - [Fcitx5 (简体中文) - ArchWiki](<https://wiki.archlinux.org/index.php/Fcitx5_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)>)
-- 🌟 https://fcitx-im.org/wiki/Using_Fcitx_5_on_Wayland#KDE_Plasma
+- 🌟 [Using Fcitx 5 on Wayland - Fcitx](https://fcitx-im.org/wiki/Using_Fcitx_5_on_Wayland)
+
   先 kill 掉任何 fcitx5 进程，然后：系统设置->输入设备->虚拟键盘。选择 Fcitx5。然后 Fcitx5 就会在 Wayland 下启动。
+
+在以下几个文件里新增 `--enable-features=UseOzonePlatform --ozone-platform=wayland --enable-wayland-ime`
+
+~/.config/microsoft-edge-stable-flags.conf
+~/.config/code-flags.conf
+~/.config/qq-electron-flags.conf
+
+在以下 ~/.gtkrc-2.0 文件中，新增 `gtk-im-module="fcitx"`
+
+在文件 ~/.config/gtk-3.0/settings.ini ~/.config/gtk-4.0/settings.ini 中，新增：
+
+```conf
+[Settings]
+gtk-im-module=fcitx
+```
+
+##
 
 ```bash
 pacman -S --needed fcitx5-{im,material-color,chinese-addons} fcitx5-pinyin-{zhwiki,moegirl}

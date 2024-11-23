@@ -11,10 +11,8 @@
 配置文件见[../vscode/settings.json](../vscode/settings.json)
 
 ```bash
-# 让 vscode 通过 wayland 运行，缺点：无法使用输入法
 ❯ vim ~/.config/code-flags.conf
---enable-features=WaylandWindowDecorations
---ozone-platform-hint=auto
+--enable-features=UseOzonePlatform,WaylandWindowDecorations --ozone-platform=wayland --enable-wayland-ime
 ```
 
 ## Docker

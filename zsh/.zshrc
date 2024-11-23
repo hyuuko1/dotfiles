@@ -107,4 +107,4 @@ __delay_load() {
 
 # 出于某种原因，我没让 journal 把日志写进 /var/log/journal
 # journal 会把日志写到 /var/run/log/journal
-[[ ! -d /var/log/journal ]] || echo "注意：/var/log/journal/ exists"
+# [[ ! -d /var/log/journal ]] || echo "注意：/var/log/journal/ exists"

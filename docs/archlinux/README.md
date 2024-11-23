@@ -57,6 +57,8 @@
 - [设备](#设备)
   - [蓝牙](#蓝牙)
   - [鼠标宏](#鼠标宏)
+- [其他](#其他-1)
+  - [systemd based initial ramdisk](#systemd-based-initial-ramdisk)
 
 ## 注意
 
@@ -592,7 +594,8 @@ Xorg 只提供图形环境的基本框架，桌面环境则在 Xorg 之上并与
 许多桌面环境提供了显示管理器**来自动启动图形界面（可选择 X11 和 Wayland）和管理用户登录**。当然也可以不使用显示管理器，而是使用 [xinit](<https://wiki.archlinux.org/index.php/Xinit_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)#%E5%9C%A8%E7%99%BB%E5%BD%95%E6%97%B6%E8%87%AA%E5%8A%A8%E5%90%AF%E7%94%A8_X>) 直接从 tty 启动图形界面。
 
 - 如果你选择了 KDE 桌面环境，推荐使用 SDDM
-  ```sh
+  ```bash
+  # sddm-git 要通过 aur 安装，但是没法通过 paru -Sau 进行更新，建议每隔一段时间重新 makepkg -si
   pacman -S --needed sddm-git
   # 启用 sddm.service，这样每次开机都会启动 sddm
   # --now 选项表示立即启动 sddm
@@ -640,6 +643,8 @@ sudo systemctl enable --now snapper-timeline.timer
 # 启用定期清理老旧快照
 sudo systemctl enable --now snapper-cleanup.timer
 ```
+
+快照会放到子卷的 .snapshots 目录下。
 
 其他的操作，比如更改创建和清理频率、手动创建快照等详见 ArchWiki。
 
@@ -837,11 +842,10 @@ dmidecode
 # 图形界面磁盘分区工具
 gparted
 
-# 截图工具， spectacle 启动有些慢，推荐 flameshot
 # 在 wayland 下 flameshot 需要 xdg-desktop-portal
 # 建议给 flameshot gui 命令弄个快捷键
 flameshot xdg-desktop-portal
-# spectacle 还有录屏功能
+# spectacle 还有录屏功能，建议给“截取矩形区域”弄个快捷键
 spectacle
 
 # 聊天工具
@@ -1113,3 +1117,13 @@ sudo pacman -S piper
   "editor.selectionClipboard": false
 }
 ```
+
+## 其他
+
+### systemd based initial ramdisk
+
+[mkinitcpio - ArchWiki](https://wiki.archlinux.org/title/Mkinitcpio)
+
+在 /etc/mkinitcpio.conf 的 HOOKS 数组内，添加 systemd 然后 mkinitcpio -P
+
+会稍微提升启动速度。

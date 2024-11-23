@@ -219,15 +219,29 @@ AV1 和 AVC 都测试成功！
 ```conf
 --ignore-gpu-blocklist
 --enable-zero-copy
---enable-features=VaapiVideoDecodeLinuxGL
+--enable-features=AcceleratedVideoDecodeLinuxGL
 ```
 
-多个 `--enable-features` 选项的值要用逗号隔开。
+注意，131 版本前的用 `--enable-features=VaapiVideoDecodeLinuxGL`
+
+https://bbs.archlinux.org/viewtopic.php?id=244031&p=44
+
+**千万注意！！多个 `--enable-features` 选项的值要用逗号隔开！！！**
 
 以后看视频都选择 AV1 编码的！
 
 在 edge://gpu/ 在后面可以看到一个表 Video Acceleration Information
 
---ozone-platform-hint=auto 开启原生 wayland 支持，开了后会变糊，不建议开。
-
 **注意，别用 linux-zen，可能有些问题**
+
+最终，加上其他选项，
+
+```conf
+--ignore-gpu-blocklist --disable-gpu-driver-bug-workarounds
+--enable-features=AcceleratedVideoDecodeLinuxGL,AcceleratedVideoEncoder,UseOzonePlatform,CanvasOopRasterization,WaylandWindowDecorations
+--ozone-platform=wayland --enable-wayland-ime
+--enable-zero-copy --canvas-oop-rasterization --enable-gpu-rasterization
+--enable-gpu --enable-unsafe-webgpu
+```
+
+webgpu 取代 vulkan
