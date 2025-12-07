@@ -1,0 +1,37 @@
+payload:
+  - DOMAIN-SUFFIX,cpubenchmark.net
+  - DOMAIN-SUFFIX,icekylin.online
+  - DOMAIN-SUFFIX,asciinema.org
+  - DOMAIN-SUFFIX,cubercsl.site
+  - DOMAIN-SUFFIX,bytelab.codes
+  - DOMAIN-SUFFIX,kde.org
+  - DOMAIN-SUFFIX,freedesktop.org
+  - DOMAIN-SUFFIX,firerain.me
+  - DOMAIN-SUFFIX,pling.com
+  - DOMAIN-SUFFIX,kde-look.org
+  - DOMAIN-SUFFIX,u.sb
+  - DOMAIN-SUFFIX,redditmail.com
+  - DOMAIN-SUFFIX,csdiy.wiki
+  - DOMAIN-SUFFIX,light-city.club
+  - DOMAIN-SUFFIX,linux-apps.com
+  - DOMAIN-SUFFIX,cppreference.com
+  - DOMAIN-SUFFIX,learncpp.com
+  - DOMAIN-SUFFIX,open-std.org
+  - DOMAIN-SUFFIX,twd2.me
+  - DOMAIN-SUFFIX,twd2.net
+  - DOMAIN-SUFFIX,moegirl.org.cn
+  - DOMAIN-SUFFIX,moegirl.org
+  - DOMAIN-SUFFIX,greasyfork.org
+  - DOMAIN-SUFFIX,acm.org
+  - DOMAIN-SUFFIX,googleapis.cn # Google Play 安装软件时会访问这个
+  # porn
+  - DOMAIN-SUFFIX,manga18fx.com
+  - DOMAIN-SUFFIX,tooldiy.ry.rs
+  - DOMAIN-SUFFIX,bepis.moe
+  - DOMAIN-SUFFIX,nyaa.si
+  - DOMAIN-SUFFIX,asmr.one
+  - DOMAIN-SUFFIX,asmr-100.com
+  - DOMAIN-SUFFIX,asmr-200.com
+  - DOMAIN-SUFFIX,asmr-300.com
+  - DOMAIN-SUFFIX,kiko-play-niptan.one
+  - DOMAIN-SUFFIX,as.mr

@@ -210,7 +210,7 @@ HEVC 和 AV1 的压缩率都差不多。
 
 archwiki 里讲了几种验证方式，使用 `sudo intel_gpu_top` 命令，如果 Video 一栏不是 0.00% 则说明在进行硬解！
 
-测试视频 https://www.bilibili.com/video/BV11f4y1K7Wx
+测试视频 [【杜比视界】你的设备能撑住吗？影视飓风年度样片](https://www.bilibili.com/video/BV1HEf2YWEvs)
 可以选择 AV1, HEVC, AVC
 
 AV1 和 AVC 都测试成功！
@@ -242,6 +242,46 @@ https://bbs.archlinux.org/viewtopic.php?id=244031&p=44
 --ozone-platform=wayland --enable-wayland-ime
 --enable-zero-copy --canvas-oop-rasterization --enable-gpu-rasterization
 --enable-gpu --enable-unsafe-webgpu
+--ignore-certificate-errors
 ```
 
 webgpu 取代 vulkan
+
+## nvidia vaapi 可以 chromium 硬解了！
+
+libva-nvidia-driver
+/usr/lib/dri/nvidia_drv_video.so
+
+先用 mpv 测试 vaapi
+
+1. `mpv --hwdec=auto video_filename` 可以显示 Using hardware decoding (nvdec).
+2. `nvtop` 的 DEC 不是 0%
+3. 浏览器 F12 媒体一栏里，硬接解码器 true
+
+chromium 的参数必须加 -enable-features=VaapiOnNvidiaGPUs 强行开启 vaapi 支持，见
+https://groups.google.com/a/chromium.org/g/feature-media-reviews/c/e9tFK3HxwrA
+否则，会报错 WARNING:vaapi_wrapper.cc(1534)] : Skipping nVidia device named: nvidia-drm
+
+根据 https://bbs.archlinux.org/viewtopic.php?pid=2223340#p2223340
+这个可以生效：
+
+```conf
+--enable-features=AcceleratedVideoDecodeLinuxZeroCopyGL,AcceleratedVideoDecodeLinuxGL,VaapiIgnoreDriverChecks,VaapiOnNvidiaGPUs
+--ozone-platform-hint=auto --enable-wayland-ime --wayland-text-input-version=3
+```
+
+原生 wayland 支持 https://wiki.archlinux.org/title/Chromium#Native_Wayland_support
+
+测试 [【杜比视界】你的设备能撑住吗？影视飓风年度样片](https://www.bilibili.com/video/BV1HEf2YWEvs)，
+HEVC 和 AVC1 可以硬解，但是 AV1 硬解失败。
+
+## AMD
+
+```conf
+--use-gl=angle
+--use-angle=vulkan
+--enable-features=Vulkan,VulkanFromANGLE,DefaultANGLEVulkan,AcceleratedVideoDecodeLinuxZeroCopyGL,AcceleratedVideoEncoder,VaapiIgnoreDriverChecks,UseMultiPlaneFormatForHardwareVideo
+--ozone-platform=wayland --enable-wayland-ime
+```
+
+成功硬解，虽然 edge://gpu/ 里会报错

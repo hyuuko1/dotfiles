@@ -114,7 +114,7 @@ sed ":a;N;s/\n$(pacman -Sgq base-devel xorg plasma kde-applications texlive-most
 # 得到的是类似于 \n包名\n\|\n包名\n\|\n包名\n 这样的结果
 # sed ":a;N;s/\n包名\n\|\n包名\n\|\n包名\n/\n/g;ba" Qqe.txt 将 \n包名\n 替换成 \n
 
-# 查询不属于某些组的软件包
+# 查询显式安装的，并且不属于某些组的软件包
 comm -23 <(pacman -Qqe | sort) <(pacman -Qqg base-devel xorg plasma kde-applications texlive-most texlive-lang fcitx5-im | sort)
 ```
 

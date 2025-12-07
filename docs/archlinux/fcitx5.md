@@ -3,7 +3,8 @@
 
   先 kill 掉任何 fcitx5 进程，然后：系统设置->输入设备->虚拟键盘。选择 Fcitx5。然后 Fcitx5 就会在 Wayland 下启动。
 
-在以下几个文件里新增 `--enable-features=UseOzonePlatform --ozone-platform=wayland --enable-wayland-ime`
+原生 wayland 支持 https://wiki.archlinux.org/title/Chromium#Native_Wayland_support
+在以下几个文件里新增 `--ozone-platform-hint=auto --enable-wayland-ime --wayland-text-input-version=3`
 
 ~/.config/microsoft-edge-stable-flags.conf
 ~/.config/code-flags.conf

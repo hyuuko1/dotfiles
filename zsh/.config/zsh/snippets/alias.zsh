@@ -45,6 +45,7 @@ alias rq="/data/blog/src/scripts/run-qemu.sh"
 # make kernel
 alias mk="make LLVM=1 O=out/x86_64 -j$(nproc)"
 alias mkv="make LLVM=1 O=out/x86_64 -j$(nproc) vmlinux"
+alias mkb="make LLVM=1 O=out/x86_64 -j$(nproc) bzImage"
 alias mkm="make LLVM=1 O=out/x86_64 -j$(nproc) menuconfig"
 alias mks="make LLVM=1 O=out/x86_64 -j$(nproc) savedefconfig"
 alias mko="make LLVM=1 O=out/x86_64 -j$(nproc) olddefconfig"
@@ -53,3 +54,20 @@ alias mki="sudo make LLVM=1 O=out/x86_64 -j$(nproc) INSTALL_MOD_PATH=/data/VMs/f
 alias gai="gdb-add-index out/x86_64/vmlinux"
 
 alias clr='printf \\x1bc'
+
+alias qmp='/data/os-code/qemu/scripts/qmp/qmp-shell'
+
+alias gf='git format-patch --diff-algorithm=patience'
+
+function fix_boot_menu() {
+  efibootmgr --create --disk $1 --part $2 --loader '\EFI\BOOT\BOOTX64.EFI' --label "Linux Boot Manager"
+}
+
+# grep linux git log
+function gl() {
+  count=${2:-"24"}
+
+  rg --mmap -N -C $count -F "$1" /data/os-code/linux.git.log
+}
+
+# pstree -alp

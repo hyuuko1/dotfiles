@@ -11,8 +11,9 @@
 配置文件见[../vscode/settings.json](../vscode/settings.json)
 
 ```bash
+# 现在好像不需要了？
 ❯ vim ~/.config/code-flags.conf
---enable-features=UseOzonePlatform,WaylandWindowDecorations --ozone-platform=wayland --enable-wayland-ime
+--ozone-platform-hint=auto --enable-wayland-ime --wayland-text-input-version=3
 ```
 
 ## Docker

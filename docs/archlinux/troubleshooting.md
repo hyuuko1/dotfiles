@@ -107,9 +107,22 @@ https://zhuanlan.zhihu.com/p/80926040
 
 ### r8152 网卡 Tx timeout 错误断网
 
+如果 r8169 驱动不管用，可以试试。
+
 ```bash
 pacman -S --needed linux-headers
 paru -S r8152-dkms
+
+# 用 r8125 驱动，避免用 r8169 驱动
+❯ cat /etc/modprobe.d/blacklist-r8169.conf
+# To use r8125 driver explicitly
+blacklist r8169
+
+❯ lspci -k
+08:00.0 Ethernet controller: Realtek Semiconductor Co., Ltd. RTL8125 2.5GbE Controller (rev 0c)
+        Subsystem: Gigabyte Technology Co., Ltd Device e000
+        Kernel driver in use: r8125
+        Kernel modules: r8169, r8125
 ```
 
 这下应该没问题了
@@ -123,12 +136,10 @@ paru -S r8152-dkms
 解决办法见 [Apple_Keyboard#Function_keys_do_not_work - ArchWiki](https://wiki.archlinux.org/title/Apple_Keyboard#Function_keys_do_not_work)。
 
 ```bash
-# 提升到 root 权限
-sudo -s
 # 临时生效，测试看看是否有用
-echo 2 >> /sys/module/hid_apple/parameters/fnmode
+echo 2 | sudo tee /sys/module/hid_apple/parameters/fnmode
 # 永久生效，设置 hid_apple 的 fnmode 选项的值为 2
-echo 'options hid_apple fnmode=2' >> /etc/modprobe.d/hid_apple.conf
+echo 'options hid_apple fnmode=2' | sudo tee /etc/modprobe.d/hid_apple.conf
 # 为了应用更改到初始 ramdisk，请确保在 /etc/mkinitcpio.conf 文件里的 HOOKS 变量里有 modconf，或者 FILES 变量里有 /etc/modprobe.d/hid_apple.conf
 # 如果没有，则修改，然后 mkinitcpio -p linux 重新生成 initramfs（如果用的是 linux-lts 则是 mkinitcpio -p linux-lts）
 ```
@@ -206,7 +217,7 @@ sudo systemctl daemon-reload
 
 `paru upd72020x-fw`
 
-## 睡眠后立即被唤醒、睡眠后无法唤醒
+## 睡眠后立即被唤醒
 
 - [电源管理/挂起与休眠 - Arch Linux 中文维基](https://wiki.archlinuxcn.org/wiki/%E7%94%B5%E6%BA%90%E7%AE%A1%E7%90%86/%E6%8C%82%E8%B5%B7%E4%B8%8E%E4%BC%91%E7%9C%A0)
 - [电源管理/唤醒触发器 - Arch Linux 中文维基](https://wiki.archlinuxcn.org/wiki/%E7%94%B5%E6%BA%90%E7%AE%A1%E7%90%86/%E5%94%A4%E9%86%92%E8%A7%A6%E5%8F%91%E5%99%A8#%E6%8C%82%E8%B5%B7%E5%90%8E%E8%A2%AB%E7%AB%8B%E5%8D%B3%E5%94%A4%E9%86%92) 挂起后被立即唤醒
@@ -221,15 +232,15 @@ archlinux kernel: ACPI Error: Aborting method \_SB.PC00.LPCB.EC0._Q44 due to pre
 解决办法：
 
 ```bash
-# 禁止被 USB 唤醒。再次执行这个命令，就会启用。
-# 如果不管用，就把 /proc/acpi/wakeup 里的挨个禁用试试
-❯ echo XHCI > /proc/acpi/wakeup
-
-# 测试下，睡眠后，按一下电源键就可以唤醒
-❯ systemctl sleep
+# 禁止被 XHC2 这个设备唤醒。重复执行这个命令，就会重新启用。
+❯ echo XHC2 > /proc/acpi/wakeup
+# 测试下睡眠。睡眠之后要按电源键唤醒。
+❯ systemctl suspend
 ```
 
-启动时，自动禁用。参考论坛帖子，https://bbs.archlinux.org/viewtopic.php?pid=1575617#p1575617
+如果不管用，就把 /proc/acpi/wakeup 里 Device 那一列的挨个尝试。
+
+以上都是临时生效，要持久生效就写个 service，每次系统启动后都禁用。
 
 ```bash
 sudo tee /etc/systemd/system/disable-usb-wakeup.service <<EOF
@@ -238,8 +249,9 @@ Description=Disable USB wakeup triggers in /proc/acpi/wakeup
 
 [Service]
 Type=oneshot
-ExecStart=/bin/sh -c "echo XHCI > /proc/acpi/wakeup"
-ExecStop=/bin/sh -c "echo XHCI > /proc/acpi/wakeup"
+# 第一次 echo 是禁用，第二次 echo 就是启用了
+ExecStart=/bin/sh -c "echo XHC0 > /proc/acpi/wakeup; echo XHC1 > /proc/acpi/wakeup; echo XHC2 > /proc/acpi/wakeup; echo XH00 > /proc/acpi/wakeup"
+ExecStop=/bin/sh -c "echo XHC0 > /proc/acpi/wakeup; echo XHC1 > /proc/acpi/wakeup; echo XHC2 > /proc/acpi/wakeup; echo XH00 > /proc/acpi/wakeup"
 RemainAfterExit=yes
 
 [Install]

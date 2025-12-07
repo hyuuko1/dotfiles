@@ -614,6 +614,7 @@ Xorg 只提供图形环境的基本框架，桌面环境则在 Xorg 之上并与
 
 - [Snapper (简体中文) - ArchWiki](<https://wiki.archlinux.org/index.php/Snapper_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)>)
 - [用 snapper 轻松玩转 Btrfs 的快照功能 - 「已注销」的文章 - 知乎](https://zhuanlan.zhihu.com/p/31082518)
+- [Btrfs：认识、从 Ext4 迁移与快照方案 | KAAAsS's blog](https://blog.kaaass.net/archives/1748)
 
 在 Btrfs 中，snapper 是以子卷为单位管理快照的。我们要先为子卷建立配置文件才能管理快照。
 
@@ -703,6 +704,8 @@ Filename      Type        Size        Used    Priority
 pacman -S --needed noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra
 # 更纱黑体
 pacman -S ttf-sarasa-gothic
+# https://aur.archlinux.org/packages/ttf-twemoji-color
+paru -S ttf-twemoji-color
 ```
 
 然后打开 System Settings->Regional Settings->Language，点击 `Add languages`，添加简体中文，并将其移至第一个，`Apply` 使其生效，然后再 Log out（注销）重新登录，就会是中文图形界面了。

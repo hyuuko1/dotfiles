@@ -28,4 +28,6 @@ export XMODIFIERS=@im=fcitx
 # export ELECTRON_TRASH=gio
 
 # https://wiki.archlinux.org/title/Hardware_video_acceleration#Configuring_VA-API
-export LIBVA_DRIVER_NAME=iHD
+# export LIBVA_DRIVER_NAME=iHD
+export LIBVA_DRIVER_NAME=nvidia
+# export LIBVA_DRIVER_NAME=radeonsi

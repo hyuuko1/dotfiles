@@ -22,12 +22,6 @@
   # 也可用 https://github.com/quininer/unzrip 用 rust 写的一个，也可以自动检测编码
   ```
 - Firefox 设置无边框：进入 Firefox 的 Customize 界面，取消勾选左下角的 Title Bar
-- TIM 导致 KDE 桌面卡死。
-  ```sh
-  # Ctrl Alt F2 进入 tty2
-  kill $(pgrep TIM.exe)
-  # 如果还不行，就只好 sudo systemctl restart sddm 了
-  ```
 - 如果新安装的软件在菜单中找不到，可以试试 `rm ~/.cache/icon-cache.kcache` 清除图标缓存
 - 禁止 DiscoverNotifier 自启动
   ```bash

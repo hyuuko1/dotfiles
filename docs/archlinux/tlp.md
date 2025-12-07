@@ -87,3 +87,24 @@ AHCI_RUNTIME_PM_ON_BAT=on
 +++ Disks
 Devices = (disabled)
 ```
+
+## power-profiles-daemon
+
+- [upower / power-profiles-daemon · GitLab](https://gitlab.freedesktop.org/upower/power-profiles-daemon)
+
+Makes power profiles handling available over D-Bus
+
+如果不想用 tlp 的话。
+power-profiles-daemon 与 kDE 的集成度更高？KDE 有个 powerdevil 组件
+
+```bash
+paru -S power-profiles-daemon
+sudo systemctl enable --now power-profiles-daemon.service
+```
+
+重启后，点桌面右下角图标，就能设置模式。
+
+```bash
+# 查看当前模式
+powerprofilesctl
+```

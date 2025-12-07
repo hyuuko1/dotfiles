@@ -38,9 +38,12 @@ initrd  /amd-ucode.img         # 由芯片制造商提供的对 CPU 微码的稳
                                # 它应当是' first initrd in the bootloader config file'
 initrd  /initramfs-linux.img   # 为内核提供的一个临时的文件系统
 
-options root=UUID=7c385288-8d94-4f83-972a-8352e3e48941 rw rootflags=subvol=@ loglevel=5 nowatchdog modprobe.blacklist=iTCO_wdt
 # 内核参数
-# root 挂载的位置，可以由 LABEL, PARTUUID 或者 UUID识别，此处使用了块设备的路径
+# root 挂载的位置，可以由 LABEL, PARTUUID 或者 UUID识别
+options root=UUID=a5618889-cc92-484b-ac69-b07df8cd00c4 rw rootflags=subvol=@archlinux
+options loglevel=5 nowatchdog modprobe.blacklist=iTCO_wdt
+options transparent_hugepage=always iommu=pt intel_iommu=on
+options nvidia.NVreg_RegistryDwords=EnableBrightnessControl=1 nvidia.NVreg_PreserveVideoMemoryAllocations=1
 ```
 
 创建文件 `/boot/loader/entries/arch-lts.conf`
@@ -127,9 +130,15 @@ There are few tools that can access/modify the UEFI variables, namely
 4. 我们选择了 systemd-boot，systemd-boot 从 EFI Variables（可以读取到 Windows Boot Manager 和 UEFI shell 等等）以及 `/boot/loader/` 目录里的配置文件（我们配置的 Arch Linux）中读取 boot loader entries，组成一个 boot loader list
 5. 选择 Arch Linux，就会启动 `/EFI/vmlinuz-linux` 内核。
 
-##
+**systemd-boot 在 boot 时，会自动检测这些：**
+https://wiki.archlinux.org/title/Systemd-boot
 
-- [ ] systemd-boot 会自动检测 `/boot/EFI/Linux/` 里的 `.efi` 文件 https://wiki.archlinux.org/title/Unified_kernel_image
+1. Windows Boot Manager `/EFI/Microsoft/Boot/Bootmgfw.efi` 文件（应该是指与 systemd-boot 同一个分区内的文件）
+2. Apple macOS Boot Manager
+3. UEFI shell `/shellx64.efi`
+4. EFI Default Loader `EFI/BOOT/bootx64.efi`
+5. `/boot/EFI/Linux/` 里的 Unified kernel images https://wiki.archlinux.org/title/Unified_kernel_image
+6. 搜索 `/loader/entries/*.conf`
 
 ## EFI shell
 
@@ -180,3 +189,24 @@ auto-reboot-to-firmware-setup
 **Menu does not appear after Windows upgrade**
 
 - [Windows changes boot order - ArchWiki](https://wiki.archlinux.org/title/Unified_Extensible_Firmware_Interface#Windows_changes_boot_order)
+
+## 给 Ventoy 的 Boot Entry 改个名字
+
+```bash
+# 删除
+sudo efibootmgr -b 0002 -B
+# /dev/nvme1n1p2
+sudo efibootmgr --create --disk /dev/nvme1n1 --part 2 --loader '\EFI\BOOT\BOOTX64.EFI' --label "Ventoy"
+```
+
+```bash
+# /dev/nvme0n1p1
+sudo efibootmgr --create --disk /dev/nvme0n1 --part 1 --loader '\EFI\Microsoft\Boot\bootmgfw.efi' --label "Windows Boot Manager"
+# /dev/nvme0n1p1
+sudo efibootmgr --create --disk /dev/nvme0n1 --part 1 --loader '\EFI\BOOT\BOOTX64.EFI' --label "Systemd Boot"
+# /dev/nvme1n1p2
+sudo efibootmgr --create --disk /dev/nvme1n1 --part 2 --loader '\EFI\BOOT\BOOTX64.EFI' --label "Ventoy"
+
+# 修改引导顺序
+sudo efibootmgr --bootorder 0001,0002,0000
+```
